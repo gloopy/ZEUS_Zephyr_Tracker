@@ -1,0 +1,50 @@
+= Zephyr Tracker README
+
+== Overview
+The purpose of this README is to act as a brief reference for the process used in revision control. 
+It walks the user through the steps starting from the inital fork to the final pull request.
+
+== How To Use Repository
+== Initial First Time Steps
+. Perform a fork of the CAN-Bus-Package repo on github.
+. Clone the fork onto your machine.
++
+`git clone https://github.com/YOURACCOUNT/zeus_Zephyr_Tracker`
+
+. Remote add the upstream repository.
++
+`git remote add zeus https://github.com/UCalgaryzeus/zeus_Zephyr_Tracker.git`
+
+== Adding Content to Repo
+=== Keeping Updated with zeus master
+Periodically, these steps will have to be run to ensure that your master is up to date with zeus' master. 
+
+IMPORTANT: NEVER do any work on your local master; this will cause merge conflicts.
+
+. `git checkout master`
+
+. `git fetch zeus`
+
+. `git rebase zeus/master`
+
+. `git push origin master`
++
+NOTE: The previous step is for making your remote fork is up to date.
+
+. `git checkout -b new-branch`
++
+NOTE: This step will create a new branch for you to work on issues or create content with.
+
+=== Pushing Content
+These steps are used to push work done on your local repository to your remote one.
+. `git add files`
+
+. `git commit -m "issue description and work done"`
+
+. `git push origin new-branch`
+NOTE: After the first push to origin new-branch, you only need to use `git push` to push it to origin new-branch
+
+=== Pull Requests
+When you are ready to perform a pull request, go onto github and create a pull request appropriately setting somebody as the assignee. 
+For information on creating pull requests, see https://yangsu.github.io/pull-request-tutorial/[this resource].
+
