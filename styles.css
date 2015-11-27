@@ -149,7 +149,7 @@ ol li
 { width: 877px;
   height: 72px;
   padding: 0;
-  background: #4C4C4C url(menu.png) repeat-x;} 
+  background: #FFA500 url(menu.png) repeat-x;} 
 
 ul#menu, ul#menu li
 { float: left;
@@ -338,3 +338,7 @@ table tr td
 { background: #F0EFE2;
   color: #47433F;
   border-top: 1px solid #FFF;}
+
+#map {
+	height:15%;
+}
