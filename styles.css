@@ -14,7 +14,7 @@ body
 under
 { font: normal .80em 'trebuchet ms', arial, sans-serif;
   font-size: 15px;
-  font-style:italic;
+  font-style:bold;
   color: #FFF;}
 
 bodybold
@@ -99,8 +99,7 @@ ol
 ol li
 { margin: 0 0 11px 0;}
 
-#main, #logo, #menubar, #site_content, #footer
-{ margin-left: auto; 
+#main, #logo, #menubar, #site_content, #footer { margin-left: auto; 
   margin-right: auto;}
 
 #header
@@ -255,8 +254,7 @@ img.resize
   height: 33px;
   padding: 24px 0 5px 0;
   text-align: center; 
-  background: #323232 url(footer.png) repeat-x;
-  color: #FFF;
+  background: #FFA500 url(footer.png) repeat-x;
   text-transform: uppercase;
   letter-spacing: 0.1em;}
 
@@ -340,5 +338,7 @@ table tr td
   border-top: 1px solid #FFF;}
 
 #map {
-	height:15%;
+	height: 400px;
+	width:99%;
 }
+
