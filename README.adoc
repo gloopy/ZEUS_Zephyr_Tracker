@@ -6,7 +6,7 @@ It walks the user through the steps starting from the inital fork to the final p
 
 == How To Use Repository
 == Initial First Time Steps
-. Perform a fork of the CAN-Bus-Package repo on github.
+. Perform a fork of the Zephyr Tracker repo on github.
 . Clone the fork onto your machine.
 +
 `git clone https://github.com/YOURACCOUNT/zeus_Zephyr_Tracker`
