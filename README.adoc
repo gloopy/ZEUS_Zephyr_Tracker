@@ -14,9 +14,12 @@ The guide walks the user through the steps starting from the inital fork to the 
 . Verify that apache works by hitting `localhost` in any browser.
 +
 NOTE: The page that should come up is the Apache 2 Ubuntu Default Page.
-. Move to the `www` directory and delete `html`.
+. Move to the `www` directory. 
 +
 `cd /var/www`
+. Delete `html` directory.
++
+`sudo rm html -rf`
 . Perform a fork of the Zephyr Tracker repo on github.
 . Clone the fork onto your machine while in the `www` directory.
 +
@@ -34,6 +37,7 @@ NOTE: The page that should come up is the Apache 2 Ubuntu Default Page.
 
 After performing these instructions, the Zephyr Tracker site can be worked on in the most convenient manner.
 All git work can be done in this folder and all it takes to see work change is to refresh your browser page.
++
 TIP: It may be worth it to consider writing an alias in your `.bashrc` to easily access this directory. For example:
 +
 `alias zeus='cd /var/www/html'`
