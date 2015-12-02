@@ -1,19 +1,42 @@
 = Zephyr Tracker README
 
 == Overview
-The purpose of this README is to act as a brief reference for the process used in revision control. 
-It walks the user through the steps starting from the inital fork to the final pull request.
+The purpose of this README is to act as a setup guide for creating a workspace for the Zephyr site.
+It is not meant to host the site for client facing use.
+Furthermore, it assumes that you don't have any websites to work on and the README can also be used as a reference for using git.
+The guide walks the user through the steps starting from the inital fork to the final pull request.
 
 == How To Use Repository
 == Initial First Time Steps
+. Install apache (assuming using a Debian based distro).
++
+`sudo apt-get install apache2`
+. Verify that apache works by hitting `localhost` in any browser.
++
+NOTE: The page that should come up is the Apache 2 Ubuntu Default Page.
+. Move to the `www` directory and delete `html`.
++
+`cd /var/www`
 . Perform a fork of the Zephyr Tracker repo on github.
-. Clone the fork onto your machine.
+. Clone the fork onto your machine while in the `www` directory.
 +
 `git clone https://github.com/YOURACCOUNT/zeus_Zephyr_Tracker`
 
 . Remote add the upstream repository.
 +
 `git remote add zeus https://github.com/UCalgaryzeus/zeus_Zephyr_Tracker.git`
+. Rename the directory to `html`.
++
+`mv ZEUS_Zephyr_Tracker/ html/`
+. Change ownership of the file.
++ 
+`sudo chown -R $USER:$USER html/`
+
+After performing these instructions, the Zephyr Tracker site can be worked on in the most convenient manner.
+All git work can be done in this folder and all it takes to see work change is to refresh your browser page.
+TIP: It may be worth it to consider writing an alias in your `.bashrc` to easily access this directory. For example:
++
+`alias zeus='cd /var/www/html'`
 
 == Adding Content to Repo
 === Keeping Updated with zeus master
