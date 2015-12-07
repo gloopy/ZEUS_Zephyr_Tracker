@@ -273,7 +273,6 @@ session_start();
         });
         </script>
 	</head>
-
 	<body>
 		<div id="main">
 			<div id="header">
