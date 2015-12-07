@@ -238,7 +238,15 @@ session_start();
 						['Point', 51.07992125409, -114.13059042320, 1110.2556],
 						['Point', 51.07992288172, -114.13052320232, 1114.7039],
 						['Point', 51.07987476967, -114.13047668418, 1132.2555]
-					];
+				];
+				// Modify marker point appearance
+				var pinIcon = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FFFF00",
+					null, 
+					null,
+					null,
+					new google.maps.Size(18, 30)
+				);  
 
                 for (var i = 0; i < markerData.length; i++) {
                     // init markers
@@ -247,6 +255,8 @@ session_start();
                         map: map,
                         title: 'Data Point: ' + i
                     });
+					marker.setIcon(pinIcon);
+					
 
                     // process multiple info windows
                     (function(marker, i) {
