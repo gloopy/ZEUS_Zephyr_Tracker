@@ -263,7 +263,12 @@ session_start();
                         // add click event
                         google.maps.event.addListener(marker, 'click', function() {
                             infowindow = new google.maps.InfoWindow({
-                                content: 'This is a test'
+							content: '<b>Data Point:</b> ' + i +
+								'<br>Latitude: ' + markerData[i][1] +
+								'<br>Longitude: ' + markerData[i][2] +
+								'<br>Altitude: ' + markerData[i][3] +
+								'<br>Speed: TOO FAST' +
+								'<br>Acceleration: ZOOM ZOOM' 
                             });
                             infowindow.open(map, marker);
                         });
