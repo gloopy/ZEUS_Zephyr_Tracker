@@ -248,19 +248,23 @@ session_start();
 					new google.maps.Size(18, 30)
 				);  
 
+				// Initialize array to contain travel path
+				var travelPath = new Array();
+
                 for (var i = 0; i < markerData.length; i++) {
-                    // init markers
+                    // Initialize markers
                     var marker = new google.maps.Marker({
                         position: new google.maps.LatLng(markerData[i][1], markerData[i][2]),
                         map: map,
                         title: 'Data Point: ' + i
                     });
+                	var markerPath = new google.maps.LatLng(markerData[i][1], markerData[i][2]);
 					marker.setIcon(pinIcon);
-					
+					travelPath.push(markerPath);
 
-                    // process multiple info windows
+                    // Process multiple info windows
                     (function(marker, i) {
-                        // add click event
+                        // Add click event
                         google.maps.event.addListener(marker, 'click', function() {
                             infowindow = new google.maps.InfoWindow({
 							content: '<b>Data Point:</b> ' + i +
@@ -274,6 +278,17 @@ session_start();
                         });
                     })(marker, i);
                 }
+
+				// Initialize travel path properties
+				var pathProperties=new google.maps.Polyline({
+					path:travelPath,
+					strokeColor:"#0000FF",
+					strokeOpacity:0.8,
+					strokeWeight:2
+				});
+				console.log(pathProperties);
+				pathProperties.setMap(map);
+
             })();
         });
         </script>
