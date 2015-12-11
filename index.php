@@ -250,6 +250,7 @@ session_start();
 
 				// Initialize array to contain travel path
 				var travelPath = new Array();
+				var origin = new google.maps.LatLng(markerData[0][1], markerData[0][2]);
 
                 for (var i = 0; i < markerData.length; i++) {
                     // Initialize markers
@@ -288,6 +289,12 @@ session_start();
 				});
 				console.log(pathProperties);
 				pathProperties.setMap(map);
+
+				// Event for resetting to origin on button press
+				google.maps.event.addDomListener(document.getElementById("reset"), 'click', function() {
+					map.setCenter(origin);
+					map.setZoom(30);
+				});
 
             })();
         });
@@ -332,7 +339,8 @@ if (empty($_SESSION["username"])) {
 				<div id="content">
 					<b>Most Recent Test Data</b>
 					<br></br>
-        <div id="map_canvas" style="width: 800px; height:500px;"></div>
+						<div id="map_canvas" style="width: 800px; height:500px;"></div>
+						<input type="button" id="reset" value="Reset to origin"></input>
 
 				</div>
 			</div>
