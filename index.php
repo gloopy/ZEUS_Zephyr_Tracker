@@ -3,7 +3,6 @@
 include 'config.php';
 session_start();
 ?>
-
 <html>
 	<head>
 		<meta name="description" content="Trackking application used to check status of the Zephyr bike in real time." />
@@ -154,13 +153,13 @@ if (empty($_SESSION["username"])) {
 <?php
 } else if (!empty($_SESSION["username"])) {
 ?>
-	<li><a href="usercp.php">User: <?php
+	<li><a href="usercp.php">User CP: <?php
 	if (!empty($_SESSION["username"])) {
 		echo $_SESSION["username"];
 	}
-?> CP</a></li> 
-		   <li><a href = "setuprace.php" title ="Setup Race">Upload Image</a></li>
-		   <li><a href="logout.php" tite="Logout">Logout</a></li>              
+?></a></li> 
+		   <li><a href = "setuprace.php">Setup/Modify Race</a></li>
+		   <li><a href="logout.php">Logout</a></li>              
 <?php
 }
 ?>
