@@ -153,12 +153,12 @@ if (empty($_SESSION["username"])) {
 <?php
 } else if (!empty($_SESSION["username"])) {
 ?>
+	<li><a href = "setuprace.php">Setup/Modify Race</a></li>
 	<li><a href="usercp.php">User CP: <?php
 	if (!empty($_SESSION["username"])) {
 		echo $_SESSION["username"];
 	}
 ?></a></li> 
-		   <li><a href = "setuprace.php">Setup/Modify Race</a></li>
 		   <li><a href="logout.php">Logout</a></li>              
 <?php
 }

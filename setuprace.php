@@ -27,7 +27,7 @@ session_start();
 					<ul id="menu">
 						<!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
 						<li><a href="index.php">Home</a></li>
-						<li class="selected"><a href="about.php">About</a></li>
+						<li><a href="about.php">About</a></li>
 						<li><a href="allraces.php">All Races</a></li>
 <?php
 if (empty($_SESSION["username"])) {
@@ -36,7 +36,7 @@ if (empty($_SESSION["username"])) {
 <?php
 } else if (!empty($_SESSION["username"])) {
 ?>
-   <li><a href = "setuprace.php">Setup/Modify Race</a></li>
+   <li class="selected"><a href = "setuprace.php">Setup/Modify Race</a></li>
 	<li><a href="usercp.php">User CP: <?php
 	if (!empty($_SESSION["username"])) {
 		echo $_SESSION["username"];
@@ -51,7 +51,7 @@ if (empty($_SESSION["username"])) {
 			</div>
 			<div id="site_content">
 				<div id="content">
-				TODO: What does this team even do?
+				TODO: This page is used to create new races or modify existing ones and add new data sets to them
 
 				</div>
 			</div>
