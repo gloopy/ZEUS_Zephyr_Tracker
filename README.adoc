@@ -64,6 +64,7 @@ NOTE: This step will create a new branch for you to work on issues or create con
 
 === Pushing Content
 These steps are used to push work done on your local repository to your remote one.
+
 . `git add files`
 
 . `git commit -m "issue description and work done"`
