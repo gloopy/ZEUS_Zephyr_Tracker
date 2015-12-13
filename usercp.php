@@ -27,7 +27,7 @@ session_start();
 					<ul id="menu">
 						<!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
 						<li><a href="index.php">Home</a></li>
-						<li class="selected"><a href="about.php">About</a></li>
+						<li><a href="about.php">About</a></li>
 						<li><a href="allraces.php">All Races</a></li>
 <?php
 if (empty($_SESSION["username"])) {
@@ -37,7 +37,7 @@ if (empty($_SESSION["username"])) {
 } else if (!empty($_SESSION["username"])) {
 ?>
    <li><a href = "setuprace.php">Setup/Modify Race</a></li>
-	<li><a href="usercp.php">User CP: <?php
+	<li class="selected"><a href="usercp.php">User CP: <?php
 	if (!empty($_SESSION["username"])) {
 		echo $_SESSION["username"];
 	}
@@ -51,7 +51,62 @@ if (empty($_SESSION["username"])) {
 			</div>
 			<div id="site_content">
 				<div id="content">
-				TODO: What does this team even do?
+<?php
+$connected = new mysqli($Database_Address, $Database_User, $Database_Password, $Database_Name);
+if ($connected->connect_errno > 0) {
+	die('Unable to connect to database [' . mysqli_connect_errno() . ']' . mysqli_connect_error());
+}
+$check = $_SESSION["username"];
+if (!empty($_SESSION["ID"])) {
+	$result = $connected->prepare("SELECT admin, email, name, title From Member WHERE username = ?");
+	$result->bind_param("s", $check);
+	$result->execute();
+	$result->bind_result($admin, $email, $name, $title);
+	$result->fetch();
+	?>    
+		<body>
+		<bodybold>Username:</bodybold>
+		<?php
+		echo $_SESSION["username"];
+		?>
+		<br>
+
+		<bodybold>Name:</bodybold>
+		<?php
+		echo $name;
+		?> 
+		<br>
+
+		<bodybold>Email:</bodybold>
+		<?php
+		echo $email;
+		?> 
+		<br>
+
+		<bodybold>Title:</bodybold>
+		<?php
+		echo $title;
+		?> 
+		<br>
+
+		<bodybold>Admin status:</bodybold>
+		<?php
+		echo $admin;
+		?> 
+		<br>
+
+		<bodybold>User Added Races:</bodybold>
+		<br>
+		<bodybold>User Added Data Sets:</bodybold>
+		<br>
+
+		<?php } else {
+		?>
+		<error>You must be logged in to view this page</error>
+		<?php
+		}
+		?>   
+		<br>
 
 				</div>
 			</div>
