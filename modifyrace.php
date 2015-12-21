@@ -50,12 +50,40 @@ if (empty($_SESSION["username"])) {
 				</div>
 			</div>
 			<div id="site_content">
-				<div id="content">
-				<bodybold>Create a race</bodybold>
+			<div id="content">	
+			<?php
+			$connected = new mysqli($Database_Address, $Database_User, $Database_Password, $Database_Name);
+			if ($connected->connect_errno > 0) {
+				die('Unable to connect to database [' . mysqli_connect_errno() . ']' . mysqli_connect_error());
+			}
+
+			$raceID = $_GET['ID'];
+
+			$query = "SELECT Race.racename, Race.location, Race.description From Race WHERE Race.raceID = ?";
+			$statement = $connected->prepare($query); 
+			$statement->bind_param("i",$raceID);
+			$statement->execute();
+			$statement->bind_result($racename, $location, $description);
+			$statement->fetch();
+			?>
+			<bodybold>Current Race Details</bodybold>
+			<br>
+			<b>Race Name:</b>
+			<?php echo $racename; ?>
+			<br><br>
+			<b>Race Location:</b>
+			<?php echo $location; ?>
+			<br><br>
+			<b>Race Description:</b>
+			<?php echo $description; ?>
+			<br><br>
+
+				
+			<bodybold>Modify Race Details</bodybold>
+				<br>
+				<form action= "modifyraceconfirm.php" method= "POST">
+					<b>Race Name</b>
 					<br>
-					<form action= "createraceconfirm.php" method= "POST">
-						<b>Race Name</b>
-						<br>
                         <input type="text" name="racename" value="" />
                         <br>
                         <br>
@@ -68,28 +96,10 @@ if (empty($_SESSION["username"])) {
                         <br>
 						<textarea cols="60" rows="8" name="desc" /></textarea><br>
                         <br>
-						<input type="submit" value="Create race" />
+						<input type="submit" value="Modify race" />
                     </form>
 					<br>
-					<bodybold>Select a race to modify</bodybold>
 					<br>
-                    <?php
-                    $connected = new mysqli($Database_Address, $Database_User, $Database_Password, $Database_Name);
-                    if ($connected->connect_errno > 0) {
-                        die('Unable to connect to database [' . mysqli_connect_errno() . ']' . mysqli_connect_error());
-                    }
-					
-					$result = $connected->prepare("SELECT Race.raceID, Race.racename, Race.location From Race ORDER BY raceID DESC"); 
-
-					$result->execute();
-					$result->bind_result($raceID, $racename, $location);
-					while ($result->fetch()) {
-					?>
-						<a href="modifyrace.php?ID=<?php echo $raceID ?>"><?php echo $racename ?> at <?php echo $location ?></a>
-							<br>
-						<?php
-						}
-						?>
 				</div>
 			</div>
 		<div id="content_footer"></div>
