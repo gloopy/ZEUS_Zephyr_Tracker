@@ -51,7 +51,24 @@ if (empty($_SESSION["username"])) {
 			</div>
 			<div id="site_content">
 				<div id="content">
-				TODO: This page is used to create new races or modify existing ones and add new data sets to them
+				<b>Create a race</b>
+				<form action= "createraceconfirm.php" method= "POST">
+						<b>Race Name</b>
+						<br>
+                        <input type="text" name="racename" value="" />
+                        <br>
+                        <br>
+                        <b>Race Location</b>
+                        <br>
+                        <input type="text" name="location" value= "" />
+                        <br>
+                        <br>
+                        <b>Description</b>
+                        <br>
+						<textarea cols="60" rows="8" name="desc" /></textarea><br>
+                        <br>
+						<input type="submit" value="Create race" />
+                    </form>
 
 				</div>
 			</div>
