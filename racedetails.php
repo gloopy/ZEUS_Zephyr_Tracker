@@ -50,35 +50,45 @@ if (empty($_SESSION["username"])) {
 				</div>
 			</div>
 			<div id="site_content">
-				<div id="content">
-					<table style="width:93%">
-					  <tr>
-						<th>Race Name</th>
-						<th>Location</th>		
-						<th>Description</th>
-					  </tr>
-					<?php
+				<div id="content"><?php
                     $connected = new mysqli($Database_Address, $Database_User, $Database_Password, $Database_Name);
                     if ($connected->connect_errno > 0) {
                         die('Unable to connect to database [' . mysqli_connect_errno() . ']' . mysqli_connect_error());
                     }
-					
-					$result = $connected->prepare("SELECT Race.raceID, Race.racename, Race.location, Race.description From Race ORDER BY raceID DESC"); 
-
+					$searchID = $_GET["ID"];
+					$result = $connected->prepare("SELECT Race.racename, Race.location, Race.description From Race WHERE Race.RaceID= ?"); 	
+					$result->bind_param("i", $searchID);
 					$result->execute();
-					$result->bind_result($raceID, $racename, $location, $description);
+					$result->bind_result($racename, $location, $description);
+					$result->fetch(); 
+					?>
+					<bodybold>Race Details For: <?php echo $racename ?></bodybold>
+					<br>
+					<b>Location: <?php echo $location ?></b> 
+					<br>
+					<b>Description:</b> <?php echo $description ?>
+					<br>
+					<br><br>
+
+					<b><u>Data Sets</u></b>
+					<br>
+
+					<?php 
+					$connected = new mysqli($Database_Address, $Database_User, $Database_Password, $Database_Name);
+                    if ($connected->connect_errno > 0) {
+                        die('Unable to connect to database [' . mysqli_connect_errno() . ']' . mysqli_connect_error());
+                    }
+
+					$result = $connected->prepare("SELECT DataSet.datasetname, DataSet.dataID From DataSet JOIN Race ON Race.RaceID = DataSet.RaceID WHERE Race.RaceID =?");
+					$result->bind_param("i", $searchID);
+					$result->execute();
+					$result->bind_result($dsname, $dataID);
 					while ($result->fetch()) {
 					?>	
-						<tr>
-						<td><a href="racedetails.php?ID=<?php echo $raceID ?>&racename=<?php echo $racename ?>&location=<?php echo $location ?>""><?php echo $racename ?></a></td>
-						<td><?php echo $location ?></td>
-						<td><?php echo $description ?></td>
-						</tr>
+						<a href="datasetdetails.php?ID=<?php echo $dataID ?>"><?php echo $dsname ?></a><br>
 						<?php
 						}
 						?>
-					</table>
-
 				</div>
 			</div>
 		<div id="content_footer"></div>
