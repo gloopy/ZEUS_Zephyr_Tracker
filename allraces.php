@@ -51,7 +51,33 @@ if (empty($_SESSION["username"])) {
 			</div>
 			<div id="site_content">
 				<div id="content">
-				TODO: This page is used to view all races and their data sets
+					<table style="width:93%">
+					  <tr>
+						<th>Race Name</th>
+						<th>Location</th>		
+						<th>Description</th>
+					  </tr>
+					<?php
+                    $connected = new mysqli($Database_Address, $Database_User, $Database_Password, $Database_Name);
+                    if ($connected->connect_errno > 0) {
+                        die('Unable to connect to database [' . mysqli_connect_errno() . ']' . mysqli_connect_error());
+                    }
+					
+					$result = $connected->prepare("SELECT Race.raceID, Race.racename, Race.location, Race.description From Race ORDER BY raceID DESC"); 
+
+					$result->execute();
+					$result->bind_result($raceID, $racename, $location, $description);
+					while ($result->fetch()) {
+					?>	
+						<tr>
+						<td><a href="racedetails.php?ID=<?php echo $raceID ?>"><?php echo $racename ?></a></td>
+						<td><?php echo $location ?></td>
+						<td><?php echo $description ?></td>
+						</tr>
+						<?php
+						}
+						?>
+					</table>
 
 				</div>
 			</div>
