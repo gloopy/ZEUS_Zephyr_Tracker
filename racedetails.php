@@ -50,7 +50,8 @@ if (empty($_SESSION["username"])) {
 				</div>
 			</div>
 			<div id="site_content">
-				<div id="content"><?php
+				<div id="content">
+					<?php
                     $connected = new mysqli($Database_Address, $Database_User, $Database_Password, $Database_Name);
                     if ($connected->connect_errno > 0) {
                         die('Unable to connect to database [' . mysqli_connect_errno() . ']' . mysqli_connect_error());
@@ -85,11 +86,11 @@ if (empty($_SESSION["username"])) {
 					$result->bind_result($dsname, $dataID);
 					while ($result->fetch()) {
 					?>	
-						<a href="datasetdetails.php?ID=<?php echo $dataID ?>"><?php echo $dsname ?></a><br>
-						<?php
-						}
-						?>
-				</div>
+						<a href="datasetdetails.php?ID=<?php echo $dataID ?>&dsname<?php echo $dsname ?>"><?php echo $dsname ?></a><br>
+					<?php
+					}
+					?>
+					</div>
 			</div>
 		<div id="content_footer"></div>
 	<div id="footer">
