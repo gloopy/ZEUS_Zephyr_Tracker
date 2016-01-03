@@ -4,6 +4,23 @@ include 'config.php';
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 'On'); 
 session_start();
+
+$data_array = array();
+$connected = new mysqli($Database_Address, $Database_User, $Database_Password, $Database_Name);
+if ($connected->connect_errno > 0) {
+		die('Unable to connect to database [' . mysqli_connect_errno() . ']' . mysqli_connect_error());
+	}
+	$searchID = $_GET["ID"];
+		$query = "SELECT DataPoint.pointID, DataPoint.time, DataPoint.acceleration, DataPoint.velocity, DataPoint.latitude, DataPoint.longitude, DataPoint.altitude From DataPoint JOIN DataSet ON DataSet.DataID = DataPoint.DataID WHERE DataPoint.DataID = $searchID";
+	$result=$connected->query($query);
+
+	while ($data = $result->fetch_array(MYSQLI_ASSOC)) {
+		$data_array[] = $data;
+	}
+	$result->free();
+
+	/* close connection */
+	$connected->close();
 ?>
 <html>
 	<head>
@@ -21,31 +38,17 @@ session_start();
         $(document).ready(function() {
             // execute
 			(function() {
-				<?php
-				$connected = new mysqli($Database_Address, $Database_User, $Database_Password, $Database_Name);
-				if ($connected->connect_errno > 0) {
-					die('Unable to connect to database [' . mysqli_connect_errno() . ']' . mysqli_connect_error());
-				}
-				$searchID = $_GET["ID"];
-				$result = $connected->prepare("SELECT DataPoint.pointID, DataPoint.time, DataPoint.acceleration, DataPoint.velocity, DataPoint.latitude, DataPoint.longitude, DataPoint.altitude From DataPoint JOIN DataSet ON DataSet.DataID = DataPoint.DataID WHERE DataPoint.DataID = ?"); 	
-				$result->bind_param("i", $searchID);
-				$result->execute();
-				$result->bind_result($pointID, $time, $acc, $vel, $lat, $long, $alt);
-				$result->fetch(); 
-				?>
-
 				// data points
 				// [name, latitude, longitude, altitude, time, velocity, acceleration]
-				var markerData = [
-						['Point', 51.08046675182, -114.13115363834, 1120.9111],
-						['Point', 51.08013243891, -114.13100622621, 1123.9679]
-				];
-
+				var markerData = <?php echo json_encode($data_array) ?>; 
+				console.log(markerData);
+	
+console.log(markerData[0][1]);
                 // map options
                 var options = {
 				    tilt: 0,
                     zoom: 18,
-                    center: new google.maps.LatLng(51.08046525830, -114.13115824621),
+                    center: new google.maps.LatLng(markerData[0]["latitude"], markerData[0]["longitude"]),
                     mapTypeId: google.maps.MapTypeId.SATELLITE,
                 };
 
@@ -61,19 +64,38 @@ session_start();
 				new google.maps.Size(18, 30)
 				);  
 
+				var pinIconStart = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|00FF00",
+					null, 
+					null,
+					null,
+				new google.maps.Size(18, 30)
+				); 
+
+				var pinIconLast = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FF0000",
+					null, 
+					null,
+					null,
+				new google.maps.Size(18, 30)
+				);
 				// Initialize array to contain travel path
 				var travelPath = new Array();
-				var origin = new google.maps.LatLng(markerData[0][1], markerData[0][2]);
+				var origin = new google.maps.LatLng(markerData[0]["latitude"], markerData[0]["longitude"]);
 
                 for (var i = 0; i < markerData.length; i++) {
                     // Initialize markers
                     var marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(markerData[i][1], markerData[i][2]),
+                        position: new google.maps.LatLng(markerData[i]["latitude"], markerData[i]["longitude"]),
                         map: map,
                         title: 'Data Point: ' + i
                     });
-                	var markerPath = new google.maps.LatLng(markerData[i][1], markerData[i][2]);
-					marker.setIcon(pinIcon);
+                	var markerPath = new google.maps.LatLng(markerData[i]["latitude"], markerData[i]["longitude"]);
+					if(i == 0) {
+						marker.setIcon(pinIconStart);
+					} else {
+						marker.setIcon(pinIcon);
+					}
 					travelPath.push(markerPath);
 
                     // Process multiple info windows
@@ -82,11 +104,12 @@ session_start();
                         google.maps.event.addListener(marker, 'click', function() {
                             infowindow = new google.maps.InfoWindow({
 							content: '<b>Data Point:</b> ' + i +
-								'<br>Latitude: ' + markerData[i][1] +
-								'<br>Longitude: ' + markerData[i][2] +
-								'<br>Altitude: ' + markerData[i][3] +
-								'<br>Speed: TOO FAST' +
-								'<br>Acceleration: ZOOM ZOOM' 
+								'<br>Latitude: ' + markerData[i]["latitude"] +
+								'<br>Longitude: ' + markerData[i]["longitude"] +
+								'<br>Altitude: ' + markerData[i]["altitude"] +
+								'<br>Accelertaion: ' + markerData[i]["acceleration"] +
+								'<br>Time: ' + markerData[i]["time"] +
+								'<br>Velocity: ' + markerData[i]["velocity"] 
                             });
                             infowindow.open(map, marker);
                         });
@@ -126,9 +149,9 @@ session_start();
 				<div id="menubar">
 					<ul id="menu">
 						<!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-						<li class="selected"><a href="index.php">Home</a></li>
+						<li><a href="index.php">Home</a></li>
 						<li><a href="about.php">About</a></li>
-						<li><a href="allraces.php">All Races</a></li>
+						<li class="selected"><a href="allraces.php">All Races</a></li>
 <?php
 if (empty($_SESSION["username"])) {
 ?>
@@ -151,7 +174,7 @@ if (empty($_SESSION["username"])) {
 			</div>
 			<div id="site_content">
 				<div id="content">
-					<b>Most Recent Test Data</b>
+				<Bodybold>Dataset Details For: <?php echo $_GET["dsname"]; ?></bodybold>
 					<br></br>
 						<div id="map_canvas" style="width: 800px; height:500px;"></div>
 						<input type="button" id="reset" value="Reset to origin"></input>

@@ -69,6 +69,7 @@ session_start();
 						['Point', 51.08012832664, -114.13101194007, 1126.9091],
 						['Point', 51.08013243891, -114.13100622621, 1123.9679]
 				];
+				console.log(markerData);
 				// Modify marker point appearance
 				var pinIcon = new google.maps.MarkerImage(
 					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FFFF00",
