@@ -86,7 +86,7 @@ if (empty($_SESSION["username"])) {
 					$result->bind_result($dsname, $dataID);
 					while ($result->fetch()) {
 					?>	
-						<a href="datasetdetails.php?ID=<?php echo $dataID ?>&dsname<?php echo $dsname ?>"><?php echo $dsname ?></a><br>
+						<a href="datasetdetails.php?ID=<?php echo $dataID ?>&dsname=<?php echo $dsname ?>"><?php echo $dsname ?></a><br>
 					<?php
 					}
 					?>

@@ -64,6 +64,21 @@ console.log(markerData[0][1]);
 				new google.maps.Size(18, 30)
 				);  
 
+				var pinIconStart = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|00FF00",
+					null, 
+					null,
+					null,
+				new google.maps.Size(18, 30)
+				); 
+
+				var pinIconLast = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FF0000",
+					null, 
+					null,
+					null,
+				new google.maps.Size(18, 30)
+				);
 				// Initialize array to contain travel path
 				var travelPath = new Array();
 				var origin = new google.maps.LatLng(markerData[0]["latitude"], markerData[0]["longitude"]);
@@ -76,7 +91,11 @@ console.log(markerData[0][1]);
                         title: 'Data Point: ' + i
                     });
                 	var markerPath = new google.maps.LatLng(markerData[i]["latitude"], markerData[i]["longitude"]);
-					marker.setIcon(pinIcon);
+					if(i == 0) {
+						marker.setIcon(pinIconStart);
+					} else {
+						marker.setIcon(pinIcon);
+					}
 					travelPath.push(markerPath);
 
                     // Process multiple info windows
@@ -155,7 +174,7 @@ if (empty($_SESSION["username"])) {
 			</div>
 			<div id="site_content">
 				<div id="content">
-					<b>Most Recent Test Data</b>
+				<Bodybold>Dataset Details For: <?php echo $_GET["dsname"]; ?></bodybold>
 					<br></br>
 						<div id="map_canvas" style="width: 800px; height:500px;"></div>
 						<input type="button" id="reset" value="Reset to origin"></input>
