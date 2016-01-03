@@ -70,7 +70,7 @@ if (empty($_SESSION["username"])) {
 					while ($result->fetch()) {
 					?>	
 						<tr>
-						<td><a href="racedetails.php?ID=<?php echo $raceID ?>&racename=<?php echo $racename ?>&location=<?php echo $location ?>""><?php echo $racename ?></a></td>
+						<td><a href="racedetails.php?ID=<?php echo $raceID ?>"><?php echo $racename ?></a></td>
 						<td><?php echo $location ?></td>
 						<td><?php echo $description ?></td>
 						</tr>
